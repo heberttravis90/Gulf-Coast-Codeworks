@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Gulf Coast Codeworks builds custom software, apps, dashboards, workflow automation, websites, and internal business tools around the way your business actually works." />
+  <title>Gulf Coast Codeworks | Custom Software, Apps & Business Solutions</title>
+  <style>
+    :root {
+      --bg: #0b0f0d;
+      --bg-soft: #121814;
+      --card: #151d18;
+      --card-2: #101611;
+      --text: #f4f7f5;
+      --muted: #aebbb3;
+      --accent: #44d17b;
+      --accent-2: #8af0aa;
+      --line: #243229;
+      --danger: #ffcc66;
+      --shadow: 0 18px 50px rgba(0,0,0,.28);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(68,209,123,.12), transparent 28%),
+        linear-gradient(180deg, #0a0e0c 0%, #0d120f 50%, #090d0b 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .wrap { width: min(1160px, calc(100% - 32px)); margin: 0 auto; }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(14px);
+      background: rgba(9,13,11,.82);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+
+    .nav-inner {
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: -.02em;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: linear-gradient(145deg, var(--accent), #1e8d4b);
+      display: grid;
+      place-items: center;
+      color: #07120b;
+      font-weight: 1000;
+      box-shadow: 0 8px 30px rgba(68,209,123,.22);
+    }
+
+    .nav-links { display: flex; gap: 24px; color: var(--muted); font-size: 14px; }
+    .nav-links a:hover { color: var(--text); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: 14px;
+      border: 1px solid transparent;
+      font-weight: 800;
+      cursor: pointer;
+      transition: .2s ease;
+    }
+
+    .btn-primary { background: var(--accent); color: #06110a; }
+    .btn-primary:hover { transform: translateY(-1px); background: var(--accent-2); }
+    .btn-secondary { background: rgba(255,255,255,.03); border-color: var(--line); color: var(--text); }
+    .btn-secondary:hover { background: rgba(255,255,255,.06); }
+
+    .hero {
+      padding: 92px 0 68px;
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 46px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(68,209,123,.28);
+      background: rgba(68,209,123,.08);
+      color: var(--accent-2);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    h1 {
+      margin: 20px 0 20px;
+      font-size: clamp(44px, 6vw, 76px);
+      line-height: .98;
+      letter-spacing: -.055em;
+      max-width: 860px;
+    }
+
+    .hero p {
+      font-size: 19px;
+      color: var(--muted);
+      max-width: 710px;
+      margin: 0 0 28px;
+    }
+
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+    .trust-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 18px;
+      margin-top: 28px;
+      color: #c6d0ca;
+      font-size: 14px;
+    }
+
+    .trust-item { display: flex; gap: 8px; align-items: center; }
+    .check { color: var(--accent); font-weight: 900; }
+
+    .hero-panel {
+      position: relative;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(24,34,28,.98), rgba(14,20,16,.98));
+      box-shadow: var(--shadow);
+      border-radius: 28px;
+      padding: 24px;
+      overflow: hidden;
+    }
+
+    .hero-panel::after {
+      content: "";
+      position: absolute;
+      inset: auto -40px -60px auto;
+      width: 180px;
+      height: 180px;
+      background: radial-gradient(circle, rgba(68,209,123,.22), transparent 68%);
+    }
+
+    .panel-label { color: var(--accent-2); font-weight: 800; font-size: 13px; margin-bottom: 18px; }
+    .problem-list { display: grid; gap: 12px; }
+    .problem {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 15px;
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 16px;
+      background: rgba(255,255,255,.025);
+    }
+    .problem-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: rgba(68,209,123,.12);
+      color: var(--accent-2);
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      font-weight: 900;
+    }
+    .problem strong { display: block; margin-bottom: 2px; }
+    .problem span { color: var(--muted); font-size: 14px; }
+
+    section { padding: 76px 0; }
+    .section-head { max-width: 760px; margin-bottom: 34px; }
+    .section-head h2 { font-size: clamp(32px, 4vw, 50px); line-height: 1.05; letter-spacing: -.04em; margin: 0 0 14px; }
+    .section-head p { color: var(--muted); margin: 0; font-size: 17px; }
+
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .card {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(22,30,25,.98), rgba(14,20,16,.98));
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: 0 10px 32px rgba(0,0,0,.12);
+    }
+    .card h3 { margin: 0 0 8px; font-size: 20px; }
+    .card p { margin: 0; color: var(--muted); }
+    .icon-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: rgba(68,209,123,.1);
+      display: grid;
+      place-items: center;
+      margin-bottom: 18px;
+      color: var(--accent-2);
+      font-size: 21px;
+      font-weight: 900;
+    }
+
+    .case-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .case {
+      position: relative;
+      overflow: hidden;
+      min-height: 330px;
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      background:
+        linear-gradient(145deg, rgba(68,209,123,.09), transparent 40%),
+        var(--card-2);
+      padding: 28px;
+    }
+    .case-kicker { color: var(--accent-2); font-size: 12px; text-transform: uppercase; letter-spacing: .1em; font-weight: 900; }
+    .case h3 { font-size: 30px; margin: 10px 0 10px; }
+    .case p { color: var(--muted); max-width: 560px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+    .tag { border: 1px solid var(--line); background: rgba(255,255,255,.025); color: #cbd5cf; border-radius: 999px; padding: 7px 10px; font-size: 12px; }
+    .case-note {
+      margin-top: 24px;
+      padding: 14px 16px;
+      border-left: 3px solid var(--accent);
+      background: rgba(68,209,123,.055);
+      color: #dce7e0;
+      font-size: 14px;
+    }
+
+    .process { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; counter-reset: step; }
+    .step {
+      position: relative;
+      padding: 22px;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.025);
+    }
+    .step::before {
+      counter-increment: step;
+      content: counter(step);
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: var(--accent);
+      color: #07110a;
+      font-weight: 1000;
+      margin-bottom: 18px;
+    }
+    .step h3 { margin: 0 0 6px; }
+    .step p { color: var(--muted); margin: 0; font-size: 14px; }
+
+    .cta {
+      display: grid;
+      grid-template-columns: 1fr .9fr;
+      gap: 26px;
+      padding: 34px;
+      border-radius: 28px;
+      border: 1px solid rgba(68,209,123,.22);
+      background: linear-gradient(140deg, rgba(68,209,123,.12), rgba(255,255,255,.02));
+      box-shadow: var(--shadow);
+    }
+    .cta h2 { margin: 0 0 10px; font-size: clamp(30px, 4vw, 48px); line-height: 1.05; letter-spacing: -.04em; }
+    .cta p { color: var(--muted); margin: 0; }
+
+    form { display: grid; gap: 12px; }
+    .field { display: grid; gap: 6px; }
+    label { font-size: 13px; color: #d7e0da; font-weight: 700; }
+    input, textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: #0c120e;
+      color: var(--text);
+      border-radius: 14px;
+      padding: 13px 14px;
+      font: inherit;
+      outline: none;
+    }
+    input:focus, textarea:focus { border-color: rgba(68,209,123,.55); box-shadow: 0 0 0 3px rgba(68,209,123,.08); }
+    textarea { min-height: 126px; resize: vertical; }
+    .form-note { color: var(--muted); font-size: 12px; margin-top: 4px; }
+
+    footer {
+      padding: 34px 0 42px;
+      color: #8f9d95;
+      border-top: 1px solid rgba(255,255,255,.06);
+      font-size: 13px;
+    }
+    .footer-inner { display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
+
+    @media (max-width: 900px) {
+      .hero, .cta { grid-template-columns: 1fr; }
+      .grid-3 { grid-template-columns: 1fr 1fr; }
+      .process { grid-template-columns: 1fr 1fr; }
+      .hero { padding-top: 64px; }
+      .nav-links { display: none; }
+    }
+
+    @media (max-width: 640px) {
+      .wrap { width: min(100% - 22px, 1160px); }
+      .hero { padding: 48px 0 40px; gap: 28px; }
+      h1 { font-size: 46px; }
+      .grid-3, .case-grid, .process { grid-template-columns: 1fr; }
+      section { padding: 56px 0; }
+      .cta { padding: 24px; }
+      .nav-inner { min-height: 62px; }
+      .nav .btn { min-height: 42px; padding: 0 12px; font-size: 13px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#top" aria-label="Home">
+        <span class="brand-mark">GCW</span>
+        <span>Gulf Coast Codeworks</span>
+      </a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#services">Services</a>
+        <a href="#work">Work</a>
+        <a href="#process">Process</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a class="btn btn-primary" href="#contact">Tell Me the Problem</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <div class="wrap hero">
+      <div>
+        <div class="eyebrow">Gulf Coast Codeworks • Custom Software & Business Solutions</div>
+        <h1>Software built around your business.</h1>
+        <p>
+          Gulf Coast Codeworks builds practical software for businesses that have outgrown spreadsheets, paper forms, group texts, duplicate data entry, and repetitive manual work. The goal is simple: build the tool around your operation—not force your operation around the software.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#contact">Tell Me What’s Slowing You Down</a>
+          <a class="btn btn-secondary" href="#work">See Example Projects</a>
+        </div>
+        <div class="trust-row">
+          <div class="trust-item"><span class="check">✓</span> Mobile-friendly</div>
+          <div class="trust-item"><span class="check">✓</span> Built around real workflows</div>
+          <div class="trust-item"><span class="check">✓</span> Designed for practical day-to-day use</div>
+        </div>
+      </div>
+
+      <aside class="hero-panel" aria-label="Common business problems">
+        <div class="panel-label">The kind of problems I solve</div>
+        <div class="problem-list">
+          <div class="problem">
+            <div class="problem-icon">↻</div>
+            <div><strong>Too much repetitive work</strong><span>Automate routine steps, calculations, forms, reminders, and reporting.</span></div>
+          </div>
+          <div class="problem">
+            <div class="problem-icon">▦</div>
+            <div><strong>Spreadsheet overload</strong><span>Move critical workflows into a cleaner system with structured data and controls.</span></div>
+          </div>
+          <div class="problem">
+            <div class="problem-icon">⌁</div>
+            <div><strong>Field-to-office disconnect</strong><span>Give employees a better way to collect, save, and send job information.</span></div>
+          </div>
+          <div class="problem">
+            <div class="problem-icon">⚙</div>
+            <div><strong>Software that doesn’t fit</strong><span>Build around your workflow instead of forcing your workflow around the software.</span></div>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <section id="services">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">Services</div>
+          <h2>Practical software for real operations.</h2>
+          <p>I focus on tools that make work easier, cleaner, faster, and easier to track.</p>
+        </div>
+        <div class="grid-3">
+          <article class="card"><div class="icon-box">▣</div><h3>Custom Web Applications</h3><p>Purpose-built applications for internal teams, customers, or field personnel.</p></article>
+          <article class="card"><div class="icon-box">◫</div><h3>Internal Business Tools</h3><p>Replace scattered spreadsheets, paper processes, and manual handoffs with one organized system.</p></article>
+          <article class="card"><div class="icon-box">↯</div><h3>Workflow Automation</h3><p>Reduce repetitive data entry and streamline processes that waste employee time.</p></article>
+          <article class="card"><div class="icon-box">▥</div><h3>Dashboards & Reporting</h3><p>Turn operational data into useful dashboards, summaries, and reports that are easier to act on.</p></article>
+          <article class="card"><div class="icon-box">⌖</div><h3>Field Service Tools</h3><p>Mobile-friendly job tools for technicians, inspectors, crews, and project teams working away from the office.</p></article>
+          <article class="card"><div class="icon-box">◇</div><h3>Websites & Client Portals</h3><p>Professional websites and simple customer-facing systems that give your business a cleaner digital presence.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="work">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">Example Work</div>
+          <h2>Built from real operational problems.</h2>
+          <p>These projects were designed around the way environmental field teams actually prepare, work, collect information, and communicate.</p>
+        </div>
+        <div class="case-grid">
+          <article class="case">
+            <div class="case-kicker">Field Operations Platform</div>
+            <h3>Stack Test Pro</h3>
+            <p>A custom workflow application designed to organize stack-testing jobs from mobilization through setup, field testing, results, and completion.</p>
+            <div class="tags">
+              <span class="tag">Job Workflow</span><span class="tag">Equipment Logic</span><span class="tag">Field Data</span><span class="tag">Reporting</span><span class="tag">Mobile Friendly</span>
+            </div>
+            <div class="case-note">Designed to reduce missed equipment, duplicate information, manual calculations, and disconnects between technicians and project management.</div>
+          </article>
+
+          <article class="case">
+            <div class="case-kicker">Environmental Operations Platform</div>
+            <h3>Air Quality Pro</h3>
+            <p>A standalone air-quality operations application designed to support broader field and compliance workflows across multiple monitoring programs.</p>
+            <div class="tags">
+              <span class="tag">Air Quality</span><span class="tag">Field Operations</span><span class="tag">Compliance</span><span class="tag">Data Collection</span><span class="tag">Job Organization</span>
+            </div>
+            <div class="case-note">Built as a scalable platform that can expand beyond a single monitoring method and support multiple types of air-quality work.</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="process">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">How It Works</div>
+          <h2>You bring the problem. I help build the solution.</h2>
+          <p>You don’t need a technical specification. Start by explaining what your team does today and where the frustration is.</p>
+        </div>
+        <div class="process">
+          <article class="step"><h3>Tell me the problem</h3><p>Show me the manual process, bottleneck, spreadsheet, form, or system that isn’t working well.</p></article>
+          <article class="step"><h3>Map the workflow</h3><p>We break down who does what, what information matters, and what the finished tool needs to accomplish.</p></article>
+          <article class="step"><h3>Build the solution</h3><p>The software is developed around the actual workflow, with practical screens and features your team can use.</p></article>
+          <article class="step"><h3>Put it to work</h3><p>Test it in real conditions, refine what needs improvement, and turn it into something useful day to day.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="wrap">
+        <div class="cta">
+          <div>
+            <div class="eyebrow">Start With the Problem</div>
+            <h2>What does your business do the hard way?</h2>
+            <p>If there’s a process your team complains about, repeats constantly, tracks manually, or works around every day, tell me about it. That’s usually where a useful custom tool starts.</p>
+          </div>
+          <form id="contactForm">
+            <div class="field">
+              <label for="name">Your name</label>
+              <input id="name" name="name" placeholder="Your name" required />
+            </div>
+            <div class="field">
+              <label for="business">Business / company</label>
+              <input id="business" name="business" placeholder="Company name" />
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="you@example.com" required />
+            </div>
+            <div class="field">
+              <label for="problem">What problem are you trying to solve?</label>
+              <textarea id="problem" name="problem" placeholder="Tell me what your team is doing now, what’s frustrating, and what you wish worked better." required></textarea>
+            </div>
+            <button class="btn btn-primary" type="submit">Create Email Inquiry</button>
+            <div class="form-note">This version opens your email app with the inquiry filled in. Replace the contact email in the file with yours before publishing.</div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <span>© 2026 Gulf Coast Codeworks • Software Built Around Your Business</span>
+      <span>Custom Apps • Internal Tools • Dashboards • Automation • Websites</span>
+    </div>
+  </footer>
+
+  <script>
+    const CONTACT_EMAIL = "YOUR_EMAIL_HERE@example.com";
+
+    document.getElementById('contactForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const business = document.getElementById('business').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const problem = document.getElementById('problem').value.trim();
+
+      const subject = encodeURIComponent(`Gulf Coast Codeworks project inquiry${business ? ' - ' + business : ''}`);
+      const body = encodeURIComponent(
+        `Name: ${name}\nBusiness: ${business || 'N/A'}\nEmail: ${email}\n\nProblem / Project Idea:\n${problem}`
+      );
+
+      window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+    });
+  </script>
+</body>
+</html>
