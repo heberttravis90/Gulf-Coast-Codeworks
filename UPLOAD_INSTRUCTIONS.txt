@@ -1,0 +1,22 @@
+GULF COAST CODE WORKS — FLAT PHONE-UPLOAD VERSION
+
+This package has NO folders. Every website file is in one level so it is easier to upload from a phone.
+
+GITHUB UPLOAD
+1. Unzip GulfCoastCodeWorks_FlatUpload.zip on your phone.
+2. Open your Gulf Coast Code Works GitHub repository.
+3. Tap Add file > Upload files.
+4. Select ALL files from the unzipped folder.
+5. Make sure index.html, CNAME, sitemap.xml, robots.txt, styles.css, site.js, all .html pages, and all image files are selected.
+6. Commit the upload to the branch your website deploys from (normally main).
+
+IMPORTANT
+- Upload the FILES inside the unzipped folder, not the .zip itself.
+- index.html replaces the current homepage.
+- Keep CNAME; it contains the custom domain setting for gulfcoastcodeworks.com.
+- This flat version intentionally uses URLs such as custom-software.html instead of /custom-software/.
+- sitemap.xml and every canonical URL have already been updated to the flat .html URLs.
+- No assets, portfolio, blog, or other folders are required.
+
+AFTER IT DEPLOYS
+Open https://gulfcoastcodeworks.com and click several menu links. Then submit https://gulfcoastcodeworks.com/sitemap.xml in Google Search Console.
