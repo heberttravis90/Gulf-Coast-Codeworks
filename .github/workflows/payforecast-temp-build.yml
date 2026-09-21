@@ -6,6 +6,11 @@ on:
     paths:
       - ".github/workflows/payforecast-temp-build.yml"
       - "payforecast-build/**"
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/payforecast-temp-build.yml"
+      - "payforecast-build/**"
 
 permissions:
   contents: read
