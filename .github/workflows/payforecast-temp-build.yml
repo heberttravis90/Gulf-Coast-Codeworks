@@ -26,6 +26,88 @@ jobs:
           test -f mobile/android/gradlew
           test -f mobile/pnpm-lock.yaml
 
+      - name: Pull latest PayForecast web build
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          from urllib.request import Request, urlopen
+          from urllib.parse import urlparse
+          import re
+
+          base = "https://payforecast-gccw.floot.app"
+          public = Path("mobile/android/app/src/main/assets/public")
+          public.mkdir(parents=True, exist_ok=True)
+
+          # Remove the old compiled Floot bundle but keep Capacitor/native helper files.
+          assets = public / "_assets"
+          if assets.exists():
+              for p in sorted(assets.rglob("*"), reverse=True):
+                  if p.is_file() or p.is_symlink():
+                      p.unlink()
+                  elif p.is_dir():
+                      p.rmdir()
+          assets.mkdir(parents=True, exist_ok=True)
+
+          seen = set()
+          queue = ["/"]
+
+          asset_re = re.compile(r'''(?:"|')((?:https://payforecast-gccw\.floot\.app)?/(?:_assets|_cdn)/[^"'\\\s<>)]+)''')
+          root_asset_re = re.compile(r'''(?:"|')(/(?:floot-push-sw\.js|OneSignalSDKWorker\.js))(?:"|')''')
+
+          def fetch(path):
+              url = path if path.startswith("http") else base + path
+              req = Request(url, headers={"User-Agent": "PayForecast-Android-Build/1.0"})
+              with urlopen(req, timeout=30) as r:
+                  return r.read(), r.headers.get_content_type()
+
+          while queue:
+              item = queue.pop(0)
+              parsed = urlparse(item)
+              path = parsed.path if parsed.scheme else item.split("?",1)[0]
+              if path in seen:
+                  continue
+              seen.add(path)
+
+              data, content_type = fetch(item)
+
+              if path == "/":
+                  target = public / "index.html"
+              else:
+                  target = public / path.lstrip("/")
+              target.parent.mkdir(parents=True, exist_ok=True)
+              target.write_bytes(data)
+
+              if content_type.startswith("text/") or path.endswith((".js",".css",".html",".json")):
+                  text = data.decode("utf-8", errors="ignore")
+                  for match in asset_re.finditer(text):
+                      ref = match.group(1)
+                      if ref.startswith(base):
+                          ref = ref[len(base):]
+                      ref = ref.split("#",1)[0]
+                      if ref not in seen:
+                          queue.append(ref)
+                  for match in root_asset_re.finditer(text):
+                      ref = match.group(1)
+                      if ref not in seen:
+                          queue.append(ref)
+
+          print("Downloaded latest production bundle:")
+          for p in sorted(public.rglob("*")):
+              if p.is_file() and (p.name == "index.html" or "_assets" in p.parts or "_cdn" in p.parts):
+                  print(p)
+          PY
+
+          grep -q "Add pay period" mobile/android/app/src/main/assets/public/_assets/*.js
+          grep -q "Standard 80 hrs" mobile/android/app/src/main/assets/public/_assets/*.js
+
+      - name: Set Android version
+        shell: bash
+        run: |
+          sed -i 's/versionCode [0-9][0-9]*/versionCode 2/' mobile/android/app/build.gradle
+          sed -i 's/versionName "[^"]*"/versionName "1.0.1"/' mobile/android/app/build.gradle
+          grep -n "versionCode\|versionName" mobile/android/app/build.gradle
+
       - name: Install mobile dependencies
         shell: bash
         working-directory: mobile
@@ -61,7 +143,7 @@ jobs:
       - name: Upload AAB
         uses: actions/upload-artifact@v4
         with:
-          name: payforecast-floot-unsigned-aab
+          name: payforecast-1.0.1-unsigned-aab
           path: mobile/android/app/build/outputs/bundle/release/app-release.aab
           if-no-files-found: error
           retention-days: 7
