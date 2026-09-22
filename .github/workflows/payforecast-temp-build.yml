@@ -24,10 +24,17 @@ jobs:
             --output payforecast-mobile.zip
           unzip -q payforecast-mobile.zip -d mobile
           test -f mobile/android/gradlew
-          test -f mobile/android/app/build.gradle
+          test -f mobile/pnpm-lock.yaml
+
+      - name: Install mobile dependencies
+        shell: bash
+        working-directory: mobile
+        run: |
+          npm install --global pnpm@10
+          pnpm install --frozen-lockfile
 
       - name: Set up Java 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: "21"
