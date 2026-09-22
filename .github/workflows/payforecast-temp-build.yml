@@ -47,6 +47,8 @@ jobs:
           SDKMANAGER=/usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager
           yes | "$SDKMANAGER" --licenses >/dev/null || true
           "$SDKMANAGER" "platform-tools" "platforms;android-36" "build-tools;36.0.0"
+          sed -i 's#android.aapt2FromMavenOverride=.*#android.aapt2FromMavenOverride=/usr/local/lib/android/sdk/build-tools/36.0.0/aapt2#' mobile/android/gradle.properties
+          test -x /usr/local/lib/android/sdk/build-tools/36.0.0/aapt2
 
       - name: Build unsigned release bundle
         shell: bash
